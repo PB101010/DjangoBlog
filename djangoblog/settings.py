@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 import os
+from pathlib import Path
 import sys
 
 
@@ -20,7 +21,9 @@ def env_to_bool(env, default):
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -103,15 +106,19 @@ WSGI_APPLICATION = 'djangoblog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DJANGO_MYSQL_DATABASE') or 'djangoblog',
-        'USER': os.environ.get('DJANGO_MYSQL_USER') or 'root',
-        'PASSWORD': os.environ.get('DJANGO_MYSQL_PASSWORD') or 'djangoblog_123',
-        'HOST': os.environ.get('DJANGO_MYSQL_HOST') or '127.0.0.1',
-        'PORT': int(
-            os.environ.get('DJANGO_MYSQL_PORT') or 3306),
-        'OPTIONS': {
-            'charset': 'utf8mb4'},
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': os.environ.get('DJANGO_MYSQL_DATABASE') or 'djangoblog',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+
+        
+        # 'USER': os.environ.get('DJANGO_MYSQL_USER') or 'root',
+        # 'PASSWORD': os.environ.get('DJANGO_MYSQL_PASSWORD') or 'djangoblog_123',
+        # 'HOST': os.environ.get('DJANGO_MYSQL_HOST') or '127.0.0.1',
+        # 'PORT': int(
+        #     os.environ.get('DJANGO_MYSQL_PORT') or 3306),
+        # 'OPTIONS': {
+        #     'charset': 'utf8mb4'},
     }}
 
 # Password validation
@@ -143,7 +150,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
